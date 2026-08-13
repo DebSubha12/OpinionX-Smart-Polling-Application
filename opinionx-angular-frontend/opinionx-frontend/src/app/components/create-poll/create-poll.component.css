@@ -1,0 +1,138 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 0.4em;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin-bottom: 1.75rem;
+}
+
+.ballot-form {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.options-label {
+  margin-top: 1.25rem;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  color: var(--ink);
+  margin-bottom: 0.9rem;
+}
+
+.field-input:focus {
+  border-color: var(--teal);
+  outline: none;
+}
+
+.option-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.option-field .field-input {
+  margin-bottom: 0.6rem;
+}
+
+.remove-btn {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-faint);
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.add-option {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--teal);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  margin-bottom: 1.25rem;
+}
+
+.add-option:hover {
+  text-decoration: underline;
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  align-self: flex-start;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--teal-deep);
+}
+
+.btn-primary:disabled {
+  background: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .ballot-form {
+    padding: 1.5rem 1.25rem;
+  }
+}

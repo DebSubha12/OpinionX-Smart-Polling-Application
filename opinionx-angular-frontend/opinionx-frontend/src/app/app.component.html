@@ -1,0 +1,27 @@
+<header class="masthead">
+  <a class="brand" routerLink="/">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <rect x="1.5" y="7" width="23" height="17" rx="1.5" stroke="var(--ink)" stroke-width="1.6" />
+        <path d="M4 7 L13 1.5 L22 7" stroke="var(--ink)" stroke-width="1.6" stroke-linejoin="round" fill="none" />
+        <rect x="10.5" y="11" width="5" height="1.8" rx="0.9" fill="var(--gold)" />
+      </svg>
+    </span>
+    <span class="brand-name">OpinionX</span>
+  </a>
+
+  <nav class="masthead-nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All polls</a>
+    <a routerLink="/create" routerLinkActive="active" class="cta">New poll</a>
+  </nav>
+</header>
+
+<main class="page">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="site-footer">
+  <span>OpinionX — Smart Polling</span>
+  <span class="dot">·</span>
+  <span>every vote, tallied in real time</span>
+</footer>

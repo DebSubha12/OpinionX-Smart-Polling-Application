@@ -1,0 +1,240 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.state-note {
+  padding: 1.5rem;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+}
+
+.state-note.error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.link-btn {
+  background: none;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-top: 0.75rem;
+}
+
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 0.3em;
+}
+
+.ballot {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 2.25rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 0.4em;
+}
+
+.ballot h1 {
+  font-size: 1.65rem;
+  margin-bottom: 1.75rem;
+  max-width: 34ch;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  cursor: pointer;
+  font-size: 0.98rem;
+  color: var(--ink);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.option-row:hover {
+  border-color: var(--teal);
+}
+
+.option-row.selected {
+  border-color: var(--gold);
+  background: rgba(200, 155, 60, 0.08);
+}
+
+.bubble {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.8px solid var(--ink-faint);
+  position: relative;
+}
+
+.bubble.filled {
+  border-color: var(--gold-deep);
+}
+
+.bubble.filled::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--gold-deep);
+}
+
+.option-text {
+  flex: 1;
+}
+
+.vote-error {
+  color: var(--danger);
+  font-size: 0.88rem;
+  margin-bottom: 0.75rem;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--teal-deep);
+}
+
+.btn-primary:disabled {
+  background: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+.results {
+  position: relative;
+}
+
+.stamp {
+  position: absolute;
+  top: -0.75rem;
+  right: -0.5rem;
+  transform: rotate(8deg);
+  border: 2px solid var(--teal);
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+.result-row {
+  margin-bottom: 1.15rem;
+}
+
+.result-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.result-label {
+  font-size: 0.96rem;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.picked-tag {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  border: 1px solid var(--gold-deep);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.result-pct {
+  font-size: 0.92rem;
+  color: var(--teal-deep);
+  font-weight: 500;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.result-row.picked .bar-fill {
+  background: var(--gold-deep);
+}
+
+.result-count {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+.total-line {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 480px) {
+  .ballot {
+    padding: 1.5rem 1.25rem;
+  }
+}

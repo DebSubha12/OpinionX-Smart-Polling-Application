@@ -1,0 +1,100 @@
+/* ===================================================================
+   OpinionX — design tokens
+   Concept: a "paper ballot" — soft paper background, deep pine ink
+   text, a wax-seal gold for the primary action, and a stamped-teal
+   for the "counted" signature element.
+=================================================================== */
+:root {
+  --paper: #f6f3ea;
+  --paper-raised: #fffdf7;
+  --ink: #1d2b28;
+  --ink-soft: #4c5753;
+  --ink-faint: #8a8f83;
+  --line: #ddd6c1;
+  --gold: #c89b3c;
+  --gold-deep: #a97f2c;
+  --teal: #2f5d5a;
+  --teal-deep: #23453f;
+  --danger: #b4432f;
+
+  --font-display: "Fraunces", "Georgia", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+
+  --radius: 3px;
+  --shadow-card: 0 1px 0 rgba(29, 43, 40, 0.05), 0 8px 24px -12px rgba(29, 43, 40, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(29, 43, 40, 0.045) 1px, transparent 0);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 0.4em;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

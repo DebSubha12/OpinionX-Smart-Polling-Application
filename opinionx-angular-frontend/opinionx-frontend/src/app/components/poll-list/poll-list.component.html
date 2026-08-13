@@ -1,0 +1,34 @@
+<div class="header-row">
+  <div>
+    <p class="eyebrow">Open ballots</p>
+    <h1>Cast your opinion</h1>
+  </div>
+</div>
+
+<div *ngIf="loading" class="state-note">Reading the ballot box…</div>
+
+<div *ngIf="error" class="state-note error">
+  {{ error }}
+  <button class="link-btn" (click)="fetchPolls()">Try again</button>
+</div>
+
+<div *ngIf="!loading && !error && polls.length === 0" class="empty">
+  <p class="empty-title">No polls yet</p>
+  <p>Be the first to put a question to a vote.</p>
+  <a routerLink="/create" class="btn-primary">Create the first poll</a>
+</div>
+
+<ul class="poll-list" *ngIf="!loading && !error && polls.length > 0">
+  <li *ngFor="let poll of polls">
+    <a class="poll-card" [routerLink]="['/polls', poll.id]">
+      <div class="poll-card-main">
+        <h2>{{ poll.question }}</h2>
+        <p class="poll-meta">{{ poll.options.length }} options</p>
+      </div>
+      <div class="tally" title="Total votes cast">
+        <span class="tally-count mono">{{ totalVotes(poll) }}</span>
+        <span class="tally-label">votes</span>
+      </div>
+    </a>
+  </li>
+</ul>

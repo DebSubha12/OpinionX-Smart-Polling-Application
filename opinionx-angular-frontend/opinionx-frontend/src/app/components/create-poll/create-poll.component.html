@@ -1,0 +1,50 @@
+<a routerLink="/" class="back-link">&larr; All polls</a>
+
+<p class="eyebrow">New ballot</p>
+<h1>Put a question to a vote</h1>
+
+<form class="ballot-form" (ngSubmit)="submit()">
+  <label class="field-label" for="question">Question</label>
+  <input
+    id="question"
+    class="field-input"
+    type="text"
+    placeholder="What should we build next?"
+    [(ngModel)]="question"
+    name="question"
+    maxlength="200"
+    autocomplete="off"
+  />
+
+  <label class="field-label options-label">Options</label>
+  <div class="option-field" *ngFor="let option of options; let i = index; trackBy: trackByIndex">
+    <input
+      class="field-input"
+      type="text"
+      [placeholder]="'Option ' + (i + 1)"
+      [(ngModel)]="options[i]"
+      [name]="'option-' + i"
+      maxlength="120"
+      autocomplete="off"
+    />
+    <button
+      type="button"
+      class="remove-btn"
+      (click)="removeOption(i)"
+      *ngIf="options.length > 2"
+      aria-label="Remove option"
+    >
+      &times;
+    </button>
+  </div>
+
+  <button type="button" class="add-option" (click)="addOption()" *ngIf="options.length < 8">
+    + Add another option
+  </button>
+
+  <p class="form-error" *ngIf="error">{{ error }}</p>
+
+  <button type="submit" class="btn-primary" [disabled]="!canSubmit">
+    {{ submitting ? 'Publishing…' : 'Publish poll' }}
+  </button>
+</form>

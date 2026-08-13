@@ -1,0 +1,66 @@
+<a routerLink="/" class="back-link">&larr; All polls</a>
+
+<div *ngIf="loading" class="state-note">Reading the ballot box…</div>
+
+<div *ngIf="notFound" class="state-note">
+  <p class="empty-title">This poll doesn't exist</p>
+  <p>It may have been removed, or the link is off.</p>
+</div>
+
+<div *ngIf="error" class="state-note error">
+  {{ error }}
+  <button class="link-btn" (click)="retry()">Try again</button>
+</div>
+
+<div class="ballot" *ngIf="!loading && !notFound && !error && poll">
+  <p class="eyebrow">Question</p>
+  <h1>{{ poll.question }}</h1>
+
+  <!-- Voting state: not yet voted -->
+  <div class="options" *ngIf="!hasVoted">
+    <button
+      type="button"
+      class="option-row"
+      *ngFor="let option of poll.options; let i = index"
+      [class.selected]="selectedIndex === i"
+      (click)="selectOption(i)"
+    >
+      <span class="bubble" [class.filled]="selectedIndex === i" aria-hidden="true"></span>
+      <span class="option-text">{{ option.optionText }}</span>
+    </button>
+  </div>
+
+  <p class="vote-error" *ngIf="voteError">{{ voteError }}</p>
+
+  <button
+    class="btn-primary submit-vote"
+    *ngIf="!hasVoted"
+    [disabled]="selectedIndex === null || submitting"
+    (click)="submitVote()"
+  >
+    {{ submitting ? 'Casting vote…' : 'Cast vote' }}
+  </button>
+
+  <!-- Results state: after voting -->
+  <div class="results" *ngIf="hasVoted">
+    <div class="stamp" aria-hidden="true">
+      <span>Counted</span>
+    </div>
+
+    <div class="result-row" *ngFor="let option of poll.options; let i = index" [class.picked]="i === selectedIndex">
+      <div class="result-top">
+        <span class="result-label">
+          {{ option.optionText }}
+          <span class="picked-tag" *ngIf="i === selectedIndex">your vote</span>
+        </span>
+        <span class="result-pct mono">{{ percentFor(option.voteCount) }}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" [style.width.%]="percentFor(option.voteCount)"></div>
+      </div>
+      <span class="result-count mono">{{ option.voteCount }} vote{{ option.voteCount === 1 ? '' : 's' }}</span>
+    </div>
+
+    <p class="total-line">{{ totalVotes() }} total votes cast</p>
+  </div>
+</div>
