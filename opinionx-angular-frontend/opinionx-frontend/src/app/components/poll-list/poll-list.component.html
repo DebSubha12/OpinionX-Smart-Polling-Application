@@ -29,6 +29,16 @@
         <span class="tally-count mono">{{ totalVotes(poll) }}</span>
         <span class="tally-label">votes</span>
       </div>
+      <button
+        type="button"
+        class="delete-btn"
+        (click)="deletePoll($event, poll)"
+        [disabled]="deletingId === poll.id"
+        aria-label="Delete poll"
+        title="Delete poll"
+      >
+        {{ deletingId === poll.id ? '…' : '✕' }}
+      </button>
     </a>
   </li>
 </ul>

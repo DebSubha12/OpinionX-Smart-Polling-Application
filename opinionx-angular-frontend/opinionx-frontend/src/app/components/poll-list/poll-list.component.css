@@ -88,6 +88,7 @@ h1 {
 }
 
 .poll-card {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -139,6 +140,31 @@ h1 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
+}
+
+.delete-btn {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-faint);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: border-color 0.12s ease, color 0.12s ease;
+}
+
+.delete-btn:hover:not(:disabled) {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.delete-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 480px) {

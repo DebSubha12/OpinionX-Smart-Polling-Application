@@ -15,6 +15,7 @@ export class PollListComponent implements OnInit {
   polls: Poll[] = [];
   loading = true;
   error = '';
+  deletingId: number | null = null;
 
   constructor(private pollService: PollService) {}
 
@@ -39,5 +40,27 @@ export class PollListComponent implements OnInit {
 
   totalVotes(poll: Poll): number {
     return poll.options.reduce((sum, o) => sum + (o.voteCount ?? 0), 0);
+  }
+
+  deletePoll(event: Event, poll: Poll): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!poll.id || this.deletingId !== null) return;
+
+    const confirmed = window.confirm(`Delete "${poll.question}"? This cannot be undone.`);
+    if (!confirmed) return;
+
+    this.deletingId = poll.id;
+    this.pollService.deletePoll(poll.id).subscribe({
+      next: () => {
+        this.polls = this.polls.filter((p) => p.id !== poll.id);
+        this.deletingId = null;
+      },
+      error: () => {
+        this.deletingId = null;
+        this.error = 'Could not delete the poll. Please try again.';
+      },
+    });
   }
 }
