@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
+import { VotedPollsStorage } from '../../services/voted-polls.storage';
 
 @Component({
   selector: 'app-poll-detail',
@@ -24,7 +25,8 @@ export class PollDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private pollService: PollService
+    private pollService: PollService,
+    private votedPollsStorage: VotedPollsStorage
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,12 @@ export class PollDetailComponent implements OnInit {
       next: (poll) => {
         this.poll = poll;
         this.loading = false;
+
+        const votedOption = this.votedPollsStorage.getVotedOption(id);
+        if (votedOption !== null) {
+          this.hasVoted = true;
+          this.selectedIndex = votedOption;
+        }
       },
       error: (err) => {
         this.loading = false;
@@ -67,16 +75,20 @@ export class PollDetailComponent implements OnInit {
   }
 
   submitVote(): void {
-    if (this.selectedIndex === null || !this.poll?.id || this.submitting) return;
+    if (this.selectedIndex === null || !this.poll?.id || this.submitting || this.hasVoted) return;
     this.submitting = true;
     this.voteError = '';
 
-    this.pollService.vote({ pollId: this.poll.id, optionIndex: this.selectedIndex }).subscribe({
+    const pollId = this.poll.id;
+    const optionIndex = this.selectedIndex;
+
+    this.pollService.vote({ pollId, optionIndex }).subscribe({
       next: () => {
         this.submitting = false;
         this.hasVoted = true;
+        this.votedPollsStorage.markVoted(pollId, optionIndex);
         // Refresh tallies from the server so the results reflect the real count.
-        this.fetchPoll(this.poll!.id!);
+        this.fetchPoll(pollId);
       },
       error: () => {
         this.submitting = false;
