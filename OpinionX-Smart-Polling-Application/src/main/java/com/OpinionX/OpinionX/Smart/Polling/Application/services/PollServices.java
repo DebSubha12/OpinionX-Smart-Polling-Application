@@ -21,7 +21,34 @@ public class PollServices {
     }
 
     public Poll createPoll(Poll poll) {
+        validatePoll(poll);
         return pollRepository.save(poll);
+    }
+
+    private void validatePoll(Poll poll) {
+        if (poll.getQuestion() == null || poll.getQuestion().trim().isEmpty()) {
+            throw new IllegalArgumentException("Question cannot be empty");
+        }
+
+        List<OptionVote> options = poll.getOptions();
+        if (options == null || options.size() < 2) {
+            throw new IllegalArgumentException("A poll needs at least 2 options");
+        }
+        if (options.size() > 8) {
+            throw new IllegalArgumentException("A poll can have at most 8 options");
+        }
+
+        List<String> seen = new java.util.ArrayList<>();
+        for (OptionVote option : options) {
+            if (option.getOptionText() == null || option.getOptionText().trim().isEmpty()) {
+                throw new IllegalArgumentException("Option text cannot be empty");
+            }
+            String normalized = option.getOptionText().trim().toLowerCase();
+            if (seen.contains(normalized)) {
+                throw new IllegalArgumentException("Duplicate option: " + option.getOptionText().trim());
+            }
+            seen.add(normalized);
+        }
     }
 
     public List<Poll> getAllPolls() {
@@ -37,6 +64,10 @@ public class PollServices {
         // Get Poll from DB
         Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new RuntimeException("Poll not found"));
+
+        if (poll.isClosed()) {
+            throw new IllegalStateException("This poll is closed and no longer accepting votes");
+        }
 
         // Get All Options
         List<OptionVote> options = poll.getOptions();
@@ -56,6 +87,13 @@ public class PollServices {
 
         // Save updated poll
         pollRepository.save(poll);
+    }
+
+    public Poll setClosed(Long pollId, boolean closed) {
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new RuntimeException("Poll not found"));
+        poll.setClosed(closed);
+        return pollRepository.save(poll);
     }
 
     public boolean deletePoll(Long id) {
