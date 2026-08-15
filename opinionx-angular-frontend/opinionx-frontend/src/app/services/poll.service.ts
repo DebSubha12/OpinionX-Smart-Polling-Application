@@ -29,4 +29,12 @@ export class PollService {
   deletePoll(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  closePoll(id: number): Observable<Poll> {
+    return this.http.patch<Poll>(`${this.baseUrl}/${id}/close`, {});
+  }
+
+  reopenPoll(id: number): Observable<Poll> {
+    return this.http.patch<Poll>(`${this.baseUrl}/${id}/reopen`, {});
+  }
 }

@@ -41,8 +41,11 @@
   <li *ngFor="let poll of filteredPolls">
     <a class="poll-card" [routerLink]="['/polls', poll.id]">
       <div class="poll-card-main">
-        <h2>{{ poll.question }}</h2>
-        <p class="poll-meta">{{ poll.options.length }} options</p>
+        <h2>
+          {{ poll.question }}
+          <span class="closed-badge" *ngIf="poll.closed">Closed</span>
+        </h2>
+        <p class="poll-meta">{{ poll.options.length }} options &middot; {{ timeAgo(poll) }}</p>
       </div>
       <div class="tally" title="Total votes cast">
         <span class="tally-count mono">{{ totalVotes(poll) }}</span>

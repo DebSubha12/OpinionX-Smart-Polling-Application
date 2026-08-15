@@ -1,0 +1,58 @@
+<div class="header-row">
+  <p class="eyebrow">Overview</p>
+  <h1>Ballot box stats</h1>
+</div>
+
+<div *ngIf="loading" class="state-note">Tallying the numbers…</div>
+
+<div *ngIf="error" class="state-note error">{{ error }}</div>
+
+<div *ngIf="!loading && !error && totalPolls === 0" class="empty">
+  <p class="empty-title">No data yet</p>
+  <p>Create a poll to see stats here.</p>
+  <a routerLink="/create" class="btn-primary">Create a poll</a>
+</div>
+
+<div *ngIf="!loading && !error && totalPolls > 0">
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-value mono">{{ totalPolls }}</span>
+      <span class="stat-label">Total polls</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ totalVotes }}</span>
+      <span class="stat-label">Total votes</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ openPolls }}</span>
+      <span class="stat-label">Open polls</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ closedPolls }}</span>
+      <span class="stat-label">Closed polls</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value mono">{{ averageVotesPerPoll }}</span>
+      <span class="stat-label">Avg votes / poll</span>
+    </div>
+  </div>
+
+  <div class="panel" *ngIf="mostVotedPoll as top">
+    <p class="panel-title">Most voted poll</p>
+    <a class="panel-link" [routerLink]="['/polls', top.id]">{{ top.question }}</a>
+    <p class="panel-sub">{{ pollVotes(top) }} votes</p>
+  </div>
+
+  <div class="panel">
+    <p class="panel-title">Top options overall</p>
+    <ol class="top-list">
+      <li *ngFor="let item of topOptions">
+        <a [routerLink]="['/polls', item.pollId]">
+          <span class="top-option-text">{{ item.optionText }}</span>
+          <span class="top-option-source">in "{{ item.pollQuestion }}"</span>
+        </a>
+        <span class="top-option-count mono">{{ item.voteCount }}</span>
+      </li>
+    </ol>
+  </div>
+</div>

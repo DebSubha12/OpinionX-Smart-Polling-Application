@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
+import { timeAgo } from '../../shared/time-ago.util';
 
 @Component({
   selector: 'app-poll-list',
@@ -48,6 +49,10 @@ export class PollListComponent implements OnInit {
 
   totalVotes(poll: Poll): number {
     return poll.options.reduce((sum, o) => sum + (o.voteCount ?? 0), 0);
+  }
+
+  timeAgo(poll: Poll): string {
+    return timeAgo(poll.createdAt);
   }
 
   deletePoll(event: Event, poll: Poll): void {

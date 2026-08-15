@@ -7,6 +7,8 @@ export interface Poll {
   id?: number;
   question: string;
   options: OptionVote[];
+  createdAt?: string;
+  closed?: boolean;
 }
 
 export interface VoteRequest {
