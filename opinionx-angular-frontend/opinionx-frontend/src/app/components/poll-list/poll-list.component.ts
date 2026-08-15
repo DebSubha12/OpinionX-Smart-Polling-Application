@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
@@ -7,7 +8,7 @@ import { PollService } from '../../services/poll.service';
 @Component({
   selector: 'app-poll-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './poll-list.component.html',
   styleUrl: './poll-list.component.css',
 })
@@ -16,6 +17,7 @@ export class PollListComponent implements OnInit {
   loading = true;
   error = '';
   deletingId: number | null = null;
+  searchTerm = '';
 
   constructor(private pollService: PollService) {}
 
@@ -36,6 +38,12 @@ export class PollListComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  get filteredPolls(): Poll[] {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) return this.polls;
+    return this.polls.filter((poll) => poll.question.toLowerCase().includes(term));
   }
 
   totalVotes(poll: Poll): number {

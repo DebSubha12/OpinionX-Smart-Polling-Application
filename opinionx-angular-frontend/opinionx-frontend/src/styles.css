@@ -98,3 +98,27 @@ textarea:focus-visible,
     transition-duration: 0.001ms !important;
   }
 }
+/* ===================================================================
+   Dark mode overrides — applied when <html data-theme="dark">
+=================================================================== */
+:root[data-theme='dark'] {
+  --paper: #1b1d1c;
+  --paper-raised: #232624;
+  --ink: #eeeae0;
+  --ink-soft: #b8b3a4;
+  --ink-faint: #7a7568;
+  --line: #3a3d38;
+  --gold: #d9ac52;
+  --gold-deep: #e6bd6a;
+  --teal: #5fa39e;
+  --teal-deep: #7cbdb7;
+  --danger: #d97a63;
+}
+
+:root[data-theme='dark'] body {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.045) 1px, transparent 0);
+}
+
+:root[data-theme='dark'] ::selection {
+  color: var(--paper);
+}

@@ -5,6 +5,17 @@
   </div>
 </div>
 
+<div class="search-row" *ngIf="!loading && !error && polls.length > 0">
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search polls…"
+    [(ngModel)]="searchTerm"
+    name="search"
+    autocomplete="off"
+  />
+</div>
+
 <div *ngIf="loading" class="state-note">Reading the ballot box…</div>
 
 <div *ngIf="error" class="state-note error">
@@ -18,8 +29,16 @@
   <a routerLink="/create" class="btn-primary">Create the first poll</a>
 </div>
 
-<ul class="poll-list" *ngIf="!loading && !error && polls.length > 0">
-  <li *ngFor="let poll of polls">
+<div
+  class="empty"
+  *ngIf="!loading && !error && polls.length > 0 && filteredPolls.length === 0"
+>
+  <p class="empty-title">No matches</p>
+  <p>No polls match "{{ searchTerm }}".</p>
+</div>
+
+<ul class="poll-list" *ngIf="!loading && !error && filteredPolls.length > 0">
+  <li *ngFor="let poll of filteredPolls">
     <a class="poll-card" [routerLink]="['/polls', poll.id]">
       <div class="poll-card-main">
         <h2>{{ poll.question }}</h2>

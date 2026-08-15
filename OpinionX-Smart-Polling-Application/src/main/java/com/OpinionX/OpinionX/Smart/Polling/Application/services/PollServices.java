@@ -4,9 +4,7 @@ package com.OpinionX.OpinionX.Smart.Polling.Application.services;
 import com.OpinionX.OpinionX.Smart.Polling.Application.model.OptionVote;
 import com.OpinionX.OpinionX.Smart.Polling.Application.model.Poll;
 import com.OpinionX.OpinionX.Smart.Polling.Application.repositories.PollRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +57,12 @@ public class PollServices {
         // Save updated poll
         pollRepository.save(poll);
     }
-}
 
+    public boolean deletePoll(Long id) {
+        if (!pollRepository.existsById(id)) {
+            return false;
+        }
+        pollRepository.deleteById(id);
+        return true;
+    }
+}

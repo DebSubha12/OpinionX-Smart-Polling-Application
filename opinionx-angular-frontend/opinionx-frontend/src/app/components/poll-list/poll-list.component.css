@@ -2,6 +2,30 @@
   margin-bottom: 1.75rem;
 }
 
+.search-row {
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.search-input:focus {
+  border-color: var(--teal);
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: var(--ink-faint);
+}
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.72rem;

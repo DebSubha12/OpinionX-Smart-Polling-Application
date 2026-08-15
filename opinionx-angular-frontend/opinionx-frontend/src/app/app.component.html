@@ -13,6 +13,15 @@
   <nav class="masthead-nav">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All polls</a>
     <a routerLink="/create" routerLinkActive="active" class="cta">New poll</a>
+    <button
+      type="button"
+      class="theme-toggle"
+      (click)="toggleTheme()"
+      [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+      title="Toggle theme"
+    >
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
   </nav>
 </header>
 
