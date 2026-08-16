@@ -8,6 +8,7 @@ export interface Poll {
   question: string;
   options: OptionVote[];
   createdAt?: string;
+  expiresAt?: string | null;
   closed?: boolean;
 }
 

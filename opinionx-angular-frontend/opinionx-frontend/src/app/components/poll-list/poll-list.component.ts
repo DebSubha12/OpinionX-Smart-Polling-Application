@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Poll } from '../../models/poll.model';
 import { PollService } from '../../services/poll.service';
-import { timeAgo } from '../../shared/time-ago.util';
+import { timeAgo, timeUntil } from '../../shared/time-ago.util';
 
 @Component({
   selector: 'app-poll-list',
@@ -53,6 +53,16 @@ export class PollListComponent implements OnInit {
 
   timeAgo(poll: Poll): string {
     return timeAgo(poll.createdAt);
+  }
+
+  expiresIn(poll: Poll): string {
+    return timeUntil(poll.expiresAt);
+  }
+
+  isClosedOrExpired(poll: Poll): boolean {
+    if (poll.closed) return true;
+    if (!poll.expiresAt) return false;
+    return new Date(poll.expiresAt).getTime() <= Date.now();
   }
 
   deletePoll(event: Event, poll: Poll): void {

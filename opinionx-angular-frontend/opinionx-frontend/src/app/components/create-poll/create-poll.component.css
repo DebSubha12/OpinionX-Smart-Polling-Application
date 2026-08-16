@@ -59,6 +59,13 @@ h1 {
   outline: none;
 }
 
+.expiry-select {
+  cursor: pointer;
+  width: auto;
+  min-width: 160px;
+  margin-bottom: 1.25rem;
+}
+
 .option-field {
   display: flex;
   align-items: center;

@@ -42,6 +42,18 @@
     + Add another option
   </button>
 
+  <label class="field-label" for="expiry">Expires</label>
+  <select
+    id="expiry"
+    class="field-input expiry-select"
+    [(ngModel)]="selectedExpiryMinutes"
+    name="expiry"
+  >
+    <option *ngFor="let choice of expiryChoices" [ngValue]="choice.minutes">
+      {{ choice.label }}
+    </option>
+  </select>
+
   <p class="form-error" *ngIf="error">{{ error }}</p>
 
   <button type="submit" class="btn-primary" [disabled]="!canSubmit">

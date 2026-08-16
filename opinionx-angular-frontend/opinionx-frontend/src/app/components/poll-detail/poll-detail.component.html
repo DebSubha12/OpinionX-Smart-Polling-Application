@@ -13,11 +13,36 @@
 </div>
 
 <div class="ballot" *ngIf="!loading && !notFound && !error && poll">
-  <p class="eyebrow">Question</p>
-  <h1>{{ poll.question }}</h1>
+  <div class="ballot-head">
+    <div>
+      <p class="eyebrow">Question</p>
+      <h1>
+        {{ poll.question }}
+        <span class="closed-badge" *ngIf="isVotingClosed">Closed</span>
+      </h1>
+      <p class="created-meta" *ngIf="poll.createdAt">Created {{ createdAgo() }}</p>
+      <p class="created-meta expiry-meta" *ngIf="poll.expiresAt">
+        {{ isExpired ? 'Expired' : 'Expires ' + expiresIn() }}
+      </p>
+    </div>
 
-  <!-- Voting state: not yet voted -->
-  <div class="options" *ngIf="!hasVoted">
+    <button
+      type="button"
+      class="close-toggle-btn"
+      (click)="toggleClosed()"
+      [disabled]="togglingClosed"
+    >
+      {{ togglingClosed ? 'Updating…' : (poll.closed ? 'Reopen poll' : 'Close poll') }}
+    </button>
+  </div>
+
+  <!-- Closed/expired & never voted on this browser: no voting UI, straight to read-only results -->
+  <p class="closed-note" *ngIf="isVotingClosed && !hasVoted">
+    This poll {{ isExpired && !poll.closed ? 'has expired' : 'is closed' }} and no longer accepting votes. Here are the final results:
+  </p>
+
+  <!-- Voting state: open poll, not yet voted -->
+  <div class="options" *ngIf="!hasVoted && !isVotingClosed">
     <button
       type="button"
       class="option-row"
@@ -34,24 +59,24 @@
 
   <button
     class="btn-primary submit-vote"
-    *ngIf="!hasVoted"
+    *ngIf="!hasVoted && !isVotingClosed"
     [disabled]="selectedIndex === null || submitting"
     (click)="submitVote()"
   >
     {{ submitting ? 'Casting vote…' : 'Cast vote' }}
   </button>
 
-  <!-- Results state: after voting -->
-  <div class="results" *ngIf="hasVoted">
-    <div class="stamp" aria-hidden="true">
+  <!-- Results state: after voting, or poll is closed/expired -->
+  <div class="results" *ngIf="hasVoted || isVotingClosed">
+    <div class="stamp" aria-hidden="true" *ngIf="hasVoted">
       <span>Counted</span>
     </div>
 
-    <div class="result-row" *ngFor="let option of poll.options; let i = index" [class.picked]="i === selectedIndex">
+    <div class="result-row" *ngFor="let option of poll.options; let i = index" [class.picked]="hasVoted && i === selectedIndex">
       <div class="result-top">
         <span class="result-label">
           {{ option.optionText }}
-          <span class="picked-tag" *ngIf="i === selectedIndex">your vote</span>
+          <span class="picked-tag" *ngIf="hasVoted && i === selectedIndex">your vote</span>
         </span>
         <span class="result-pct mono">{{ percentFor(option.voteCount) }}%</span>
       </div>

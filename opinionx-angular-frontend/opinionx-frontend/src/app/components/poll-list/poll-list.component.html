@@ -43,9 +43,14 @@
       <div class="poll-card-main">
         <h2>
           {{ poll.question }}
-          <span class="closed-badge" *ngIf="poll.closed">Closed</span>
+          <span class="closed-badge" *ngIf="isClosedOrExpired(poll)">Closed</span>
         </h2>
-        <p class="poll-meta">{{ poll.options.length }} options &middot; {{ timeAgo(poll) }}</p>
+        <p class="poll-meta">
+          {{ poll.options.length }} options &middot; {{ timeAgo(poll) }}
+          <span class="expiry-tag" *ngIf="poll.expiresAt && !isClosedOrExpired(poll)">
+            &middot; expires {{ expiresIn(poll) }}
+          </span>
+        </p>
       </div>
       <div class="tally" title="Total votes cast">
         <span class="tally-count mono">{{ totalVotes(poll) }}</span>
